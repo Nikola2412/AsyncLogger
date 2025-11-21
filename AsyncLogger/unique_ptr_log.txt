@@ -1,0 +1,3 @@
+[2025-11-21 16:03:29] [INFO] Unique pointer info message.
+[2025-11-21 16:03:29] [WARN] Unique pointer warning message.
+[2025-11-21 16:03:29] [ERROR] Unique pointer error message.
