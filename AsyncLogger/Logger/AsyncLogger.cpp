@@ -15,7 +15,7 @@ AsyncLogger::AsyncLogger(const std::string& filePath, bool enableConsole, bool e
 #endif
 
     if (m_FileEnabled)
-        m_File.open(filePath, std::ios::out | std::ios::app);
+        m_File.open(LOG_DIR + filePath, std::ios::out);
 	m_Thread = std::thread(&AsyncLogger::ThreadFunc, this);
 }
 
@@ -25,6 +25,9 @@ AsyncLogger::~AsyncLogger()
     m_CV.notify_one();
     if (m_Thread.joinable())
         m_Thread.join();
+
+    if (m_FileEnabled) 
+        m_File.close();
 
     FlushRemaining();
 }
@@ -59,7 +62,7 @@ void AsyncLogger::ThreadFunc()
 
             // Write to file
             if (m_FileEnabled)
-                m_File << item.message << std::endl;
+                m_File << item.message << '\n';
 
             lock.lock();
         }
@@ -76,7 +79,7 @@ void AsyncLogger::FlushRemaining()
             PrintColored(item.level, item.message);
 
         if (m_FileEnabled)
-            m_File << item.message << std::endl;
+            m_File << item.message << '\n';
 
         m_Queue.pop();
     }
@@ -96,9 +99,9 @@ void AsyncLogger::PrintColored(Level level, const std::string& msg)
     case Level::Error: color = "\033[31m"; break; // Red
     }
 
-    std::cout << color << msg << "\033[0m" << std::endl;
+    std::cout << color << msg << "\033[0m" << '\n';
 #else
-	std::cout << msg << std::endl;
+	std::cout << msg << '\n';
 #endif
 }
 

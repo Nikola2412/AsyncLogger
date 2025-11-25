@@ -1,6 +1,0 @@
-[2025-11-21 16:01:54] [INFO] File only info message.
-[2025-11-21 16:01:54] [WARN] File only warning message.
-[2025-11-21 16:01:54] [ERROR] File only error message.
-[2025-11-21 16:03:29] [INFO] File only info message.
-[2025-11-21 16:03:29] [WARN] File only warning message.
-[2025-11-21 16:03:29] [ERROR] File only error message.

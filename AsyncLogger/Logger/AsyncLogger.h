@@ -13,10 +13,10 @@
 #include <iostream>
 
 #ifdef _WIN32
-#include <windows.h>
+    #include <windows.h>
 #endif
 
-
+#define LOG_DIR "LogFiles/"
 
 class AsyncLogger
 {
