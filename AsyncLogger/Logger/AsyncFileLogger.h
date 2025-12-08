@@ -1,6 +1,7 @@
 #pragma once
 #include "AsyncLogger.h"
 #include <fstream>
+#include <filesystem>
 
 #define LOG_DIR "LogFiles/"
 

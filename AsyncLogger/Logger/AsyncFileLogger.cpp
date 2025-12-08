@@ -19,11 +19,12 @@ void AsyncFileLogger::output(const LogItem& item)
     if (item.message.empty()) {
         return;
     }
+	std::string path = m_Filename;
 
     if (!m_File.is_open()) {
-        m_File.open(m_Filename, std::ios::app);
+        m_File.open(path, std::ios::app);
         if (!m_File.is_open()) {
-            std::cerr << "AsyncFileLogger: failed to open log file: " << m_Filename << std::endl;
+            std::cerr << "AsyncFileLogger: failed to open log file: " << path << std::endl;
             return;
         }
     }
@@ -40,16 +41,16 @@ void AsyncFileLogger::output(const LogItem& item)
             m_File.close();
         }
 
-        m_File.open(m_Filename, std::ios::app);
+        m_File.open(path, std::ios::app);
 
         if (!m_File.is_open()) {
-            std::cerr << "AsyncFileLogger: reopen failed: " << m_Filename << std::endl;
+            std::cerr << "AsyncFileLogger: reopen failed: " << path << std::endl;
             return;
         }
 
         m_File << item.message << '\n';
         if (m_File.fail()) {
-            std::cerr << "AsyncFileLogger: write failed after reopen: " << m_Filename << std::endl;
+            std::cerr << "AsyncFileLogger: write failed after reopen: " << path << std::endl;
             m_File.clear();
             return;
         }
@@ -57,19 +58,20 @@ void AsyncFileLogger::output(const LogItem& item)
 
     m_File.flush();
     if (m_File.fail()) {
-        std::cerr << "AsyncFileLogger: flush failed for file: " << m_Filename << std::endl;
+        std::cerr << "AsyncFileLogger: flush failed for file: " << path << std::endl;
         m_File.clear();
     }
 }
 
 void AsyncFileLogger::openFile()
 {
-
     if (m_File.is_open()) {
         m_File.close();
     }
 
-    m_File.open(m_Filename, std::ios::out);
+	std::string path =  m_Filename;
+
+    m_File.open(path, std::ios::out);
 
     if (!m_File.is_open()) {
         std::cerr << "Failed to open log file" << std::endl;
