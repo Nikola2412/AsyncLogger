@@ -46,7 +46,6 @@ void AsyncLogger::ThreadFunc()
 
         lock.unlock();
         
-        
         output(item);
     }
 }
