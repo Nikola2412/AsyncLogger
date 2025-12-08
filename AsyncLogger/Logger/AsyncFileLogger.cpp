@@ -1,6 +1,6 @@
 #include "AsyncFileLogger.h"
 
-AsyncFileLogger::AsyncFileLogger(const std::string& filename) : m_Filename(filename) ,m_Directory(LOG_DIR)
+AsyncFileLogger::AsyncFileLogger(const std::string& filename) : m_Filename(filename), m_Directory(LOG_DIR)
 {
 	openFile();
 }
@@ -14,24 +14,65 @@ AsyncFileLogger::~AsyncFileLogger()
 
 void AsyncFileLogger::output(const LogItem& item)
 {
-	if(m_File.is_open())
-	{
-		m_File << item.message << '\n';
-	}
+    std::lock_guard<std::mutex> lock(m_Mutex);
+
+    if (item.message.empty()) {
+        return;
+    }
+
+    if (!m_File.is_open()) {
+        m_File.open(m_Filename, std::ios::app);
+        if (!m_File.is_open()) {
+            std::cerr << "AsyncFileLogger: failed to open log file: " << m_Filename << std::endl;
+            return;
+        }
+    }
+
+    m_File.clear();
+
+    m_File << item.message << '\n';
+
+    if (m_File.fail()) {
+        std::cerr << "AsyncFileLogger: write failed, attempting to recover"<< std::endl;
+
+        m_File.clear();
+        if (m_File.is_open()) {
+            m_File.close();
+        }
+
+        m_File.open(m_Filename, std::ios::app);
+
+        if (!m_File.is_open()) {
+            std::cerr << "AsyncFileLogger: reopen failed: " << m_Filename << std::endl;
+            return;
+        }
+
+        m_File << item.message << '\n';
+        if (m_File.fail()) {
+            std::cerr << "AsyncFileLogger: write failed after reopen: " << m_Filename << std::endl;
+            m_File.clear();
+            return;
+        }
+    }
+
+    m_File.flush();
+    if (m_File.fail()) {
+        std::cerr << "AsyncFileLogger: flush failed for file: " << m_Filename << std::endl;
+        m_File.clear();
+    }
 }
 
 void AsyncFileLogger::openFile()
 {
 
-    // Close the file if it's already open
     if (m_File.is_open()) {
         m_File.close();
     }
 
-    m_File.open(m_Filename, std::ios::app);
+    m_File.open(m_Filename, std::ios::out);
 
     if (!m_File.is_open()) {
         std::cerr << "Failed to open log file" << std::endl;
-        std::abort();  // Abort the program if the file can't be opened
+        std::abort();
     }
 }

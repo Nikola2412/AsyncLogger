@@ -15,6 +15,8 @@ AsyncConsoleLogger::AsyncConsoleLogger()
 
 void AsyncConsoleLogger::output(const LogItem& item)
 {
+	std::lock_guard<std::mutex> lock(m_Mutex);
+
 #ifdef _WIN32
     const char* color = "";
 
