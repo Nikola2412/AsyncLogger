@@ -19,6 +19,8 @@ private:
 	void output(const LogItem& item) override;
 	void openFile();
 
+	void onError();
+
 private:
 	std::string m_Path;
 	std::string m_Directory;

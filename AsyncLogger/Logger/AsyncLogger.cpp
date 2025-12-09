@@ -46,7 +46,7 @@ void AsyncLogger::ThreadFunc()
 
         lock.unlock();
         
-        output(item);
+        if (m_Running) output(item);
     }
 }
 
@@ -55,7 +55,7 @@ void AsyncLogger::FlushRemaining()
     while (!m_Queue.empty()) {
         const LogItem item = std::move(m_Queue.front());
         m_Queue.pop();
-        output(item);
+        if(m_Running) output(item);
     }
 }
 
