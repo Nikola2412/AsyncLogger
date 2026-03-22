@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /AsyncLogger/LogFiles
 /AsyncLogger/*.txt
+
+App/*
