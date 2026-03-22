@@ -365,3 +365,5 @@ FodyWeavers.xsd
 /AsyncLogger/*.txt
 
 App/*
+/App/App.vcxproj
+/App/App.vcxproj.filters
