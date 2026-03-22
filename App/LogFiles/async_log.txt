@@ -1,3 +1,0 @@
-[2026-02-24 02:24:46] [INFO] File log: This is an info message.
-[2026-02-24 02:24:46] [WARN] File log: This is a warning message.
-[2026-02-24 02:24:46] [ERROR] File log: This is an error message.
