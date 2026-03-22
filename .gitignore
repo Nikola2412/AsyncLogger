@@ -367,3 +367,5 @@ FodyWeavers.xsd
 App/*
 /App/App.vcxproj
 /App/App.vcxproj.filters
+
+x64/*
