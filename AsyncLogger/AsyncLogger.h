@@ -51,5 +51,5 @@ protected:
     std::thread m_Thread;
 };
 
-#include "AsyncConsoleLogger.h"
-#include "AsyncFileLogger.h"
+#include "Logger/AsyncConsoleLogger.h"
+#include "Logger/AsyncFileLogger.h"

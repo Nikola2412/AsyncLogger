@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Logger\AsyncLogger.cpp">
+    <ClCompile Include="AsyncLogger.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Logger\AsyncConsoleLogger.cpp">
@@ -26,7 +26,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Logger\AsyncLogger.h">
+    <ClInclude Include="AsyncLogger.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Logger\AsyncConsoleLogger.h">

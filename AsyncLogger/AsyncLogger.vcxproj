@@ -133,12 +133,12 @@
   <ItemGroup>
     <ClCompile Include="Logger\AsyncFileLogger.cpp" />
     <ClCompile Include="Logger\AsyncConsoleLogger.cpp" />
-    <ClCompile Include="Logger\AsyncLogger.cpp" />
+    <ClCompile Include="AsyncLogger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger\AsyncFileLogger.h" />
     <ClInclude Include="Logger\AsyncConsoleLogger.h" />
-    <ClInclude Include="Logger\AsyncLogger.h" />
+    <ClInclude Include="AsyncLogger.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

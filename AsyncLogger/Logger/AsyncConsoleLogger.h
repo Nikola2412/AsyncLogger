@@ -1,6 +1,6 @@
 #pragma once
 
-#include "AsyncLogger.h"
+#include "../AsyncLogger.h"
 
 #ifdef _WIN32
 	#include <windows.h>
