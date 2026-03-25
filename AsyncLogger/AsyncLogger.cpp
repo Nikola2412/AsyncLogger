@@ -6,6 +6,11 @@ AsyncLogger::AsyncLogger()
     m_Thread = std::thread(&AsyncLogger::ThreadFunc, this);
 }
 
+AsyncLogger::AsyncLogger(std::vector<std::shared_ptr<AsyncLogger>> loggers) {
+    m_Loggers = std::move(loggers);
+    m_Running = false;
+}
+
 AsyncLogger::~AsyncLogger()
 {
     m_Running = false;
@@ -18,11 +23,21 @@ AsyncLogger::~AsyncLogger()
 
 void AsyncLogger::Log(Level level, const std::string& msg)
 {
+
+    if (!m_Loggers.empty()) {
+        for (auto &logger : m_Loggers) {
+            if (logger) {
+                logger->Log(level, msg);
+            }
+        }
+        return;
+    }
+
     std::string formatted = Format(level, msg);
 
     {
         std::lock_guard<std::mutex> lock(m_Mutex);
-        m_Queue.push({ level, formatted });
+        m_Queue.push(LogItem{ level, formatted });
     }
 
     m_CV.notify_one();
@@ -45,17 +60,20 @@ void AsyncLogger::ThreadFunc()
         m_Queue.pop();
 
         lock.unlock();
-        
-        if (m_Running) output(item);
+
+        output(item);
     }
 }
 
 void AsyncLogger::FlushRemaining()
 {
-    while (!m_Queue.empty()) {
+    while (true) {
+        std::unique_lock<std::mutex> lock(m_Mutex);
+        if (m_Queue.empty()) break;
         const LogItem item = std::move(m_Queue.front());
         m_Queue.pop();
-        if(m_Running) output(item);
+        lock.unlock();
+        output(item);
     }
 }
 
