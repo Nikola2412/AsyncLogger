@@ -1,7 +1,8 @@
 #include "AsyncConsoleLogger.h"
 
-AsyncConsoleLogger::AsyncConsoleLogger() 
+AsyncConsoleLogger::AsyncConsoleLogger(const std::string& name)
 {
+	this->m_Name = name;
 #ifdef _WIN32
     // Enable ANSI colors on Windows 10+ terminals
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -10,7 +11,6 @@ AsyncConsoleLogger::AsyncConsoleLogger()
     SetConsoleMode(hOut, dwMode | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
 #endif
 }
-
 
 
 void AsyncConsoleLogger::output(const LogItem& item)

@@ -9,7 +9,8 @@
 class AsyncConsoleLogger : public AsyncLogger
 {
 public:
-	AsyncConsoleLogger();
+	AsyncConsoleLogger(const std::string& name = "AsyncConsoleLogger");
+	//AsyncConsoleLogger();
 
 private:
 	void output(const LogItem& item) override;

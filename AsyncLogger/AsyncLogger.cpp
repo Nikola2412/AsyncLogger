@@ -1,12 +1,8 @@
 #include "AsyncLogger.h"
 
-AsyncLogger::AsyncLogger()
-{
-    m_Running = true;
-    m_Thread = std::thread(&AsyncLogger::ThreadFunc, this);
-}
-
-AsyncLogger::AsyncLogger(std::vector<std::shared_ptr<AsyncLogger>> loggers) {
+AsyncLogger::AsyncLogger(std::vector<std::shared_ptr<AsyncLogger>> loggers,const std::string& name) {
+    this->m_Name = name;
+    for (auto& logger : loggers) logger->setName(name);
     m_Loggers = std::move(loggers);
     m_Running = false;
 }
@@ -101,7 +97,8 @@ std::string AsyncLogger::Format(Level level, const std::string& msg)
 #endif
 
     std::ostringstream oss;
-    oss << "[" << std::put_time(&tm_now, "%Y-%m-%d %H:%M:%S") << "] "
+    oss << "[" + this->m_Name + "] "
+        << "[" << std::put_time(&tm_now, "%Y-%m-%d %H:%M:%S") << "] "
         << "[" << LevelToString(level) << "] "
         << msg;
     return oss.str();

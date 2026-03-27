@@ -12,9 +12,11 @@
 #include <vector>
 #include <memory>
 
+#define ASYNC_NAME "AsyncLogger"
+
 class AsyncLogger
 {
-public:
+protected:
     enum class Level {
         Info,
         Warn,
@@ -27,16 +29,26 @@ public:
     };
 
 public:
-
-    AsyncLogger(std::vector<std::shared_ptr<AsyncLogger>> loggers);
+	AsyncLogger(const std::string& name) : m_Name(name), m_Running(true), m_Thread(&AsyncLogger::ThreadFunc, this) {}
+    AsyncLogger(std::vector<std::shared_ptr<AsyncLogger>> loggers,const std::string& name);
     virtual ~AsyncLogger();
 
     void Info(const std::string& msg) { Log(Level::Info, msg); }
     void Warn(const std::string& msg) { Log(Level::Warn, msg); }
     void Error(const std::string& msg) { Log(Level::Error, msg); }
 
+    void AddLogger(std::shared_ptr<AsyncLogger> logger) {
+        logger->setName(this->getName());
+        m_Loggers.push_back(logger);
+    }
+
+    void setName(const std::string& name) { this->m_Name = name; }
+    std::string& setName() { return this->m_Name; }
+
+	std::string getName() const { return this->m_Name; }
+
 protected:
-    AsyncLogger();
+    AsyncLogger() : AsyncLogger(ASYNC_NAME) {}
 
     void Log(Level level, const std::string& msg);
     void ThreadFunc();
@@ -46,7 +58,11 @@ protected:
     const char* LevelToString(Level level);
 
     virtual void output(const LogItem& item) {};
+
+
 protected:
+	std::string m_Name;
+
     std::queue<LogItem> m_Queue;
     std::mutex m_Mutex;
     std::condition_variable m_CV;

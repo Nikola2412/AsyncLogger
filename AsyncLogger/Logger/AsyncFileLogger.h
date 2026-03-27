@@ -9,7 +9,8 @@
 class AsyncFileLogger : public AsyncLogger
 {
 public:
-	AsyncFileLogger(const std::string& filename = LOG_FILENAME, const std::string& dirnamne = LOG_DIR);
+	AsyncFileLogger(const std::string& name = "AsyncFileLogger", const std::string& filename = LOG_FILENAME, const std::string& dirnamne = LOG_DIR);
+	//AsyncFileLogger(const std::string& filename = LOG_FILENAME, const std::string& dirnamne = LOG_DIR);
 	~AsyncFileLogger();
 	//void setFilename(const std::string& filename) { m_Filename = filename; openFile(); }
 	//void setDirectory(const std::string& directory) { m_Filename = m_Directory; openFile(); }

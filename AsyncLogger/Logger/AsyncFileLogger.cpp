@@ -2,8 +2,9 @@
 
 namespace fs = std::filesystem;
 
-AsyncFileLogger::AsyncFileLogger(const std::string& filename, const std::string& dirname) : m_Filename(filename), m_Directory(dirname)
+AsyncFileLogger::AsyncFileLogger(const std::string& name, const std::string& filename, const std::string& dirname) : m_Filename(filename), m_Directory(dirname)
 {
+	this->m_Name = name;
 	openFile();
 }
 
