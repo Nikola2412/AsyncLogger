@@ -1,4 +1,7 @@
 #pragma once
+#ifndef ASYNCFILELOGGER_H
+#define ASYNCFILELOGGER_H
+
 #include "../AsyncLogger.h"
 #include <fstream>
 #include <filesystem>
@@ -29,3 +32,4 @@ private:
 	std::ofstream m_File;
 };
 
+#endif // !ASYNCFILELOGGER_H

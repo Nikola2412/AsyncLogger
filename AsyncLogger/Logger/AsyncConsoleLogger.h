@@ -1,4 +1,6 @@
 #pragma once
+#ifndef ASYNCCONSOLELOGGER_H
+#define ASYNCCONSOLELOGGER_H
 
 #include "../AsyncLogger.h"
 
@@ -16,3 +18,4 @@ private:
 	void output(const LogItem& item) override;
 };
 
+#endif // !ASYNCCONSOLELOGGER_H

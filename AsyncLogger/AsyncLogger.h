@@ -1,4 +1,7 @@
 #pragma once
+#ifndef ASYNCLOGGER_H
+#define ASYNCLOGGER_H
+
 #include <string>
 #include <queue>
 #include <thread>
@@ -75,3 +78,5 @@ protected:
 
 #include "Logger/AsyncConsoleLogger.h"
 #include "Logger/AsyncFileLogger.h"
+
+#endif // !ASYNCLOGGER_H
