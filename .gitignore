@@ -370,3 +370,9 @@ App/*
 
 x64/*
 /bin-int
+
+*.filters
+*.user
+
+bin
+bin-int

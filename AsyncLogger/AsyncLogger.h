@@ -30,7 +30,7 @@ protected:
 
 public:
 	AsyncLogger(const std::string& name) : m_Name(name), m_Running(true), m_Thread(&AsyncLogger::ThreadFunc, this) {}
-    AsyncLogger(std::vector<std::shared_ptr<AsyncLogger>> loggers,const std::string& name);
+    AsyncLogger(std::vector<std::shared_ptr<AsyncLogger>> loggers,const std::string& name = ASYNC_NAME);
     virtual ~AsyncLogger();
 
     void Info(const std::string& msg) { Log(Level::Info, msg); }
