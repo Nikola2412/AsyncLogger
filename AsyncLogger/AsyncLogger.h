@@ -76,7 +76,7 @@ protected:
 	std::vector<std::shared_ptr<AsyncLogger>> m_Loggers;
 };
 
+#endif // !ASYNCLOGGER_H
+
 #include "Logger/AsyncConsoleLogger.h"
 #include "Logger/AsyncFileLogger.h"
-
-#endif // !ASYNCLOGGER_H
