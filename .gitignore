@@ -373,6 +373,7 @@ x64/*
 
 *.filters
 *.user
+*.sln
 
 bin
 bin-int
