@@ -50,14 +50,14 @@ public:
     template<typename... Args>
     void Warn(const std::string& fmt, Args&&... args)
     {
-        Log(Level::Info,
+        Log(Level::Warn,
             std::vformat(fmt, std::make_format_args(args...)));
     }
 
     template<typename... Args>
     void Error(const std::string& fmt, Args&&... args)
     {
-        Log(Level::Info,
+        Log(Level::Error,
             std::vformat(fmt, std::make_format_args(args...)));
     }
 
