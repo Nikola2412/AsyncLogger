@@ -40,6 +40,27 @@ public:
     void Warn(const std::string& msg) { Log(Level::Warn, msg); }
     void Error(const std::string& msg) { Log(Level::Error, msg); }
 
+    template<typename... Args>
+    void Info(const std::string& fmt, Args&&... args)
+    {
+        Log(Level::Info,
+            std::vformat(fmt, std::make_format_args(args...)));
+    }
+
+    template<typename... Args>
+    void Warn(const std::string& fmt, Args&&... args)
+    {
+        Log(Level::Info,
+            std::vformat(fmt, std::make_format_args(args...)));
+    }
+
+    template<typename... Args>
+    void Error(const std::string& fmt, Args&&... args)
+    {
+        Log(Level::Info,
+            std::vformat(fmt, std::make_format_args(args...)));
+    }
+
     void AddLogger(std::shared_ptr<AsyncLogger> logger) {
         logger->setName(this->getName());
         m_Loggers.push_back(logger);
